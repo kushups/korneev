@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин обуви</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #333; color: white; padding: 10px; text-align: center; }
+        nav { background-color: #444; padding: 10px; text-align: center; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .container { padding: 20px; }
+        .product { display: inline-block; width: 30%; margin: 10px; padding: 10px; background-color: white; border-radius: 5px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .product img { width: 100%; height: auto; border-radius: 5px; }
+        .product h3 { margin: 10px 0; }
+        .product p { color: #555; }
+        .product button { background-color: #1d0d61; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .product button:hover { background-color: #1d0d61; }
+        footer { background-color: #333; color: white; text-align: center; padding: 10px; position: fixed; width: 100%; bottom: 0; }
+        .cart { position: fixed; top: 10px; right: 10px; background-color: #11248b; color: white; padding: 10px 20px; border-radius: 50%; cursor: pointer; }
+        .cart:hover { background-color: #1d0d61; }
+        .cart-count { font-size: 1.2em; }
+        .cart-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 300px; }
+        .cart-popup h3 { margin-top: 0; }
+        .cart-popup ul { list-style: none; padding: 0; }
+        .cart-popup li { margin: 10px 0; }
+        .cart-popup button { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .cart-popup button:hover { background-color: #c82333; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Empo Sell</h1>
+</header>
+
+<nav>
+    <a href="mainpic.html">Главная</a>
+    <a href="shoes.html">Каталог</a>
+    <a href="">О нас</a>
+</nav>
+
+<div class="container" id="home">
+    <h2>Добро пожаловать в наш магазин!</h2>
+    <h3>Здесь вы найдете стильную и качественную обувь на любой вкус.</h3>
+</div>
+
+<div class="container" id="catalog">
+    <h2>Каталог обуви</h2>
+    <div class="product">
+        <img src="pictures/Thumb_Balenciaga3xl.jpg" alt="Кроссовки Balenciaga">
+        <h3>Кроссовки Balenciaga</h3>
+        <p>Цена: 60000 Р.</p>
+        <button onclick="addToCart('Кроссовки Balenciaga', 70000)">Купить</button>
+    </div>
+    <div class="product">
+        <img src="pictures/6820996363.jpg" alt="Кроссовки Nike Air Jordan 4 'Black Cat'">
+        <h3>Кроссовки Nike Air Jordan 4 'Black Cat'</h3>
+        <p>Цена: 40000 Р.</p>
+        <button onclick="addToCart('Кроссовки Nike Air Jordan 4 Black Cat', 60000)">Купить</button>
+    </div>
+    <div class="product">
+        <img src="pictures/1ghth9imoa58sp04eg2x1vunp9cqy1qk.png" alt="Кроссовки Nike Skepta">
+        <h3>Кроссовки Nike Skepta</h3>
+        <p>Цена: 21000 Р.</p>
+        <button onclick="addToCart('Кроссовки Nike Skepta', 32000)">Купить</button>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Магазин обуви Empo Sell</p>
+</footer>
+
+<div class="cart" onclick="toggleCartPopup()">
+    🛒 <span class="cart-count">0</span>
+</div>
+
+<div class="cart-popup" id="cartPopup">
+    <h3>Ваша корзина</h3>
+    <ul id="cartItems"></ul>
+    <p><strong>Итого: <span id="totalPrice">0</span> Р.</strong></p>
+    <button onclick="clearCart()">Очистить корзину</button>
+</div>
+
+<script>
+    let cart = [];
+    let cartCount = 0;
+    let total = 0;
+
+    function addToCart(productName, price) {
+        cart.push({ name: productName, price: price });
+        cartCount++;
+        total += price;
+        updateCart();
+    }
+
+    function updateCart() {
+        document.querySelector('.cart-count').textContent = cartCount;
+        document.getElementById('cartItems').innerHTML = cart.map(item => `<li>${item.name} - ${item.price} Р.</li>`).join('');
+        document.getElementById('totalPrice').textContent = total;
+    }
+
+    function toggleCartPopup() {
+        const popup = document.getElementById('cartPopup');
+        popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function clearCart() {
+        cart = [];
+        cartCount = 0;
+        total = 0;
+        updateCart();
+        toggleCartPopup();
+    }
+</script>
+
+</body>
+</html>
+
+
+ 

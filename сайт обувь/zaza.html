@@ -1,0 +1,76 @@
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+const shoes = [
+  { id: 1, name: "Кроссовки Nike", price: 7500, image: "https://via.placeholder.com/150" },
+  { id: 2, name: "Ботинки Timberland", price: 12500, image: "https://via.placeholder.com/150" },
+  { id: 3, name: "Туфли Clarks", price: 8500, image: "https://via.placeholder.com/150" }
+];
+
+export default function ShoeStore() {
+  const [cart, setCart] = useState([]);
+  const [view, setView] = useState("home");
+
+  const addToCart = (shoe) => {
+    setCart((prev) => [...prev, shoe]);
+  };
+
+  const renderHome = () => (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+      {shoes.map((shoe) => (
+        <Card key={shoe.id} className="p-4">
+          <CardContent className="flex flex-col items-center">
+            <img src={shoe.image} alt={shoe.name} className="mb-2 w-32 h-32 object-cover" />
+            <h2 className="text-xl font-bold text-center">{shoe.name}</h2>
+            <p className="mb-2">{shoe.price} руб.</p>
+            <Button onClick={() => addToCart(shoe)}>Добавить в корзину</Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+
+  const renderCart = () => (
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Корзина</h2>
+      {cart.length === 0 ? (
+        <p>Корзина пуста</p>
+      ) : (
+        <div className="space-y-2">
+          {cart.map((item, index) => (
+            <div key={index} className="border p-2 rounded shadow-sm">
+              <p>{item.name} - {item.price} руб.</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderAbout = () => (
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-2">О нас</h2>
+      <p>Мы — онлайн-магазин обуви, предоставляющий широкий выбор качественной обуви по доступным ценам. Работаем напрямую с производителями и заботимся о комфорте каждого клиента.</p>
+    </div>
+  );
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      <header className="flex flex-col md:flex-row justify-between items-center p-4 shadow-md bg-white sticky top-0 z-10">
+        <h1 className="text-2xl font-bold">Магазин Обуви</h1>
+        <nav className="space-x-2 mt-2 md:mt-0">
+          <Button variant="ghost" onClick={() => setView("home")}>Главная</Button>
+          <Button variant="ghost" onClick={() => setView("cart")}>Корзина ({cart.length})</Button>
+          <Button variant="ghost" onClick={() => setView("about")}>О нас</Button>
+        </nav>
+      </header>
+
+      <main className="bg-gray-50 min-h-screen p-4">
+        {view === "home" && renderHome()}
+        {view === "cart" && renderCart()}
+        {view === "about" && renderAbout()}
+      </main>
+    </div>
+  );
+}
